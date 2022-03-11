@@ -83,9 +83,10 @@ export default function EarthQuakeMapping() {
     };
     getRelevantData();
     //earthquake data gets updated every 5 minutes
-    setInterval(getRelevantData, 300000);
+    // setInterval(getRelevantData, 500000);
   }, []);
 
+  //on reload of page input data should not be deleted; sessionStorage is used to store the data
   useEffect(() => {
     window.sessionStorage.setItem("birthday", birthday);
   }, [birthday]);
@@ -123,11 +124,11 @@ export default function EarthQuakeMapping() {
     const getMedianMagnitude = getMedian([...filteredData]);
     const greatestMagnitude = getGreatestEarthQuake([
       ...filteredData,
-    ])?.magnitude; //also say where it happend
+    ])?.magnitude;
 
     if (birthday) {
       setInfoCardContent({
-        header: "Your birthday earthquake horoscope",
+        header: "Your birthday earthquake tectonicscope",
         content:
           getTextRelatedToMagnitudeOnBirthday(greatestMagnitude) +
           `<p><b>Total number of earthquakes:</b> ${numberOfEarthquakes}</p> <p><b>Median magnitude:</b> ${getMedianMagnitude}</p> <b>Greatest magnitude:</b> ${greatestMagnitude}`,
@@ -213,7 +214,7 @@ export default function EarthQuakeMapping() {
     <>
       <Grid container item>
         <div className={classes.headline}>
-          <Headline>{"Your personal earthquake horoscope"}</Headline>
+          <Headline>{"Your personal earthquake tectonicscope"}</Headline>
         </div>
       </Grid>
       <Grid container spacing={1}>
