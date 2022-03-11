@@ -79,7 +79,6 @@ export default function EarthQuakeMapping() {
   useEffect(() => {
     const getRelevantData = async () => {
       const data = await getData();
-      console.log("call get relevant data");
       setFilteredData(data);
     };
     getRelevantData();
@@ -171,7 +170,6 @@ export default function EarthQuakeMapping() {
     setBirthday(birthDate);
     let filteredData = [];
     if (isValidDate(new Date(birthday))) {
-      console.log("is valid date");
       filteredData = await getEarthQuakesForDate(birthDate);
     }
     setFilteredData(filteredData);
