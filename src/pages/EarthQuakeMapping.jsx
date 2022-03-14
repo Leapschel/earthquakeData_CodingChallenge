@@ -146,15 +146,15 @@ export default function EarthQuakeMapping() {
     }
   }, [filteredData]);
 
-  const changeMonth = async (month) => {
+  const changeMonth = async (newMonth) => {
     setDataLoaded(false);
     setBirthday(null);
     setShowEarthQuakeDetails(false);
-    setMonth(month);
+    setMonth(newMonth);
 
     let filteredData = [];
-    if (isValidDate(month)) {
-      const firstAndLastDayOfMonth = getFirstAndLastDayOfMonth(month);
+    if (isValidDate(newMonth)) {
+      const firstAndLastDayOfMonth = getFirstAndLastDayOfMonth(newMonth);
       filteredData = await getEarthQuakesForDate(
         firstAndLastDayOfMonth[0],
         firstAndLastDayOfMonth[1]
@@ -164,14 +164,15 @@ export default function EarthQuakeMapping() {
     setDataLoaded(true);
   };
 
-  const changeBirthday = async (birthDate) => {
+  const changeBirthday = async (newBirthDay) => {
     setDataLoaded(false);
     setMonth(null);
     setShowEarthQuakeDetails(false);
-    setBirthday(birthDate);
+    setBirthday(newBirthDay);
+
     let filteredData = [];
-    if (isValidDate(new Date(birthday))) {
-      filteredData = await getEarthQuakesForDate(birthDate);
+    if (isValidDate(newBirthDay)) {
+      filteredData = await getEarthQuakesForDate(newBirthDay);
     }
     setFilteredData(filteredData);
     setDataLoaded(true);
@@ -192,7 +193,6 @@ export default function EarthQuakeMapping() {
       )}</p>`,
     });
   };
-
 
   const getTextRelatedToMagnitudeOnBirthday = (magnitude) => {
     if (magnitude < 3) return textForInfoCard.birthday.micro;
