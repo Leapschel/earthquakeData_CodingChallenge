@@ -71,7 +71,7 @@ export default function EarthQuakeMapping() {
   const [earthQuakeDetails, setEarthQuakeDetails] = useState("");
   const [showEarthQuakeDetails, setShowEarthQuakeDetails] = useState(false);
 
-  const [centerOfMap, setCenterOfMap] = useState({
+  const [centerOfMap] = useState({
     lat: 11.0168,
     lng: 76.9558,
   });
@@ -116,32 +116,26 @@ export default function EarthQuakeMapping() {
   };
 
   useEffect(() => {
-    if (!filteredData || !filteredData.length) {
+    if (!filteredData) {
       return;
     }
 
     const numberOfEarthquakes = filteredData.length;
-    const getMedianMagnitude = getMedian([...filteredData]);
-    const greatestMagnitude = getGreatestEarthQuake([
-      ...filteredData,
-    ])?.magnitude;
+    const medianMagnitude = getMedian([...filteredData]) ?? "-";
+    const greatestMagnitude =
+      getGreatestEarthQuake([...filteredData])?.magnitude ?? "-";
 
     if (birthday) {
       setInfoCardContent({
         header: "Your birthday earthquake tectonicscope",
         content:
           getTextRelatedToMagnitudeOnBirthday(greatestMagnitude) +
-          `<p><b>Total number of earthquakes:</b> ${numberOfEarthquakes}</p> <p><b>Median magnitude:</b> ${getMedianMagnitude}</p> <b>Greatest magnitude:</b> ${greatestMagnitude}`,
+          `<p><b>Total number of earthquakes:</b> ${numberOfEarthquakes}</p> <p><b>Median magnitude:</b> ${medianMagnitude}</p> <b>Greatest magnitude:</b> ${greatestMagnitude}`,
       });
     } else if (month) {
       setInfoCardContent({
         header: "Info",
-        content: `<p><b>Total number of earthquakes:</b> ${numberOfEarthquakes}</p> <p><b>Median magnitude:</b> ${getMedianMagnitude}</p> <b>Greatest magnitude:</b> ${greatestMagnitude}`,
-      });
-    } else {
-      setInfoCardContent({
-        header: "Info",
-        content: `Map shows all earthquakes of the current month so far. <p><b>Total number of earthquakes:</b> ${numberOfEarthquakes}</p> <p><b>Median magnitude:</b> ${getMedianMagnitude}</p> <b>Greatest magnitude:</b> ${greatestMagnitude}`,
+        content: `<p><b>Total number of earthquakes:</b> ${numberOfEarthquakes}</p> <p><b>Median magnitude:</b> ${medianMagnitude}</p> <b>Greatest magnitude:</b> ${greatestMagnitude}`,
       });
     }
   }, [filteredData]);
@@ -169,7 +163,6 @@ export default function EarthQuakeMapping() {
     setMonth(null);
     setShowEarthQuakeDetails(false);
     setBirthday(newBirthDay);
-
     let filteredData = [];
     if (isValidDate(newBirthDay)) {
       filteredData = await getEarthQuakesForDate(newBirthDay);
@@ -207,7 +200,7 @@ export default function EarthQuakeMapping() {
     else if (magnitude < 8.0 && magnitude >= 7.0)
       return textForInfoCard.birthday.major;
     else if (magnitude >= 8.0) return textForInfoCard.birthday.highest;
-    else return textForInfoCard.birthday.default;
+    else return textForInfoCard.birthday.micro;
   };
 
   return (

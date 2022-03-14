@@ -1,3 +1,3 @@
 export default function isValidDate(d) {
-    return d instanceof Date && !isNaN(d) && d !== "Invalid Date";
-  }
+  return d instanceof Date && !isNaN(d) && d !== "Invalid Date";
+}

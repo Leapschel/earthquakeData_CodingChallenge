@@ -1,11 +1,19 @@
 import { getEarthQuakesAtDates } from "../API/usgsApi";
 
 export function getGreatestEarthQuake(data) {
-  return data
-    .filter((element) => element.magnitude)
-    .reduce((prev, current) => {
-      return prev.magnitude > current.magnitude ? prev : current;
-    });
+  if (!data.length) {
+    return [];
+  }
+
+  const filteredData = data.filter((element) => element.magnitude);
+
+  if (!filteredData.length) {
+    return [];
+  }
+
+  return filteredData.reduce((prev, current) => {
+    return prev.magnitude > current.magnitude ? prev : current;
+  });
 }
 
 export async function getEarthQuakesForDate(startDate, endDate) {
@@ -43,7 +51,7 @@ const mapEarthQuakeData = (earthQuakeData) => {
         magnitude: earthQuake.properties?.mag,
         id: earthQuake.id,
         place: earthQuake.properties?.place,
-        time:  earthQuake.properties?.time
+        time: earthQuake.properties?.time,
       };
     });
 };
