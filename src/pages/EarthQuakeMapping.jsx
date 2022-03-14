@@ -227,6 +227,8 @@ export default function EarthQuakeMapping() {
                 animateYearScrolling
                 label={"Enter your birthday"}
                 disableFuture={true}
+                format="dd MMMM yyyy"
+                maxDate={new Date()}
               />
             </MuiPickersUtilsProvider>
           </div>
