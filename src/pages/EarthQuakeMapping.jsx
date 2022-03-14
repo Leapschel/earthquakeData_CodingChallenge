@@ -246,6 +246,7 @@ export default function EarthQuakeMapping() {
                 label={"Select a month"}
                 views={["year", "month"]}
                 disableFuture={true}
+                maxDate={new Date()}
               />
             </MuiPickersUtilsProvider>
           </div>
